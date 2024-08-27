@@ -1,0 +1,30 @@
+services:
+  trivia_api:
+    build: .
+    expose:
+      - "5000"
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./logs:/app/logs  # Map the logs folder on the host to the container
+
+  mongo:
+    image: mongo:6.0
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  # nginx:
+  #   image: nginx:latest
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - trivia_api
+
+volumes:
+  mongo_data:
